@@ -5,7 +5,7 @@ VisualStudioVersion = 17.10.35013.160
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "frontend-react-vite", "frontend-react-vite\frontend-react-vite.esproj", "{17ACE4A3-823B-477D-831E-BBD1AE5E6FBB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "backend-aspnetcore", "backend-aspnetcore\backend-aspnetcore.csproj", "{7D2D107A-ED19-4C08-964F-03E6CBD533FE}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "backend-aspnet-core", "backend-aspnet-core\backend-aspnet-core.csproj", "{41DF94ED-FF31-4736-AC08-463DB563EADE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,10 +19,10 @@ Global
 		{17ACE4A3-823B-477D-831E-BBD1AE5E6FBB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{17ACE4A3-823B-477D-831E-BBD1AE5E6FBB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{17ACE4A3-823B-477D-831E-BBD1AE5E6FBB}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{7D2D107A-ED19-4C08-964F-03E6CBD533FE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7D2D107A-ED19-4C08-964F-03E6CBD533FE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7D2D107A-ED19-4C08-964F-03E6CBD533FE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7D2D107A-ED19-4C08-964F-03E6CBD533FE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{41DF94ED-FF31-4736-AC08-463DB563EADE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{41DF94ED-FF31-4736-AC08-463DB563EADE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{41DF94ED-FF31-4736-AC08-463DB563EADE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{41DF94ED-FF31-4736-AC08-463DB563EADE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

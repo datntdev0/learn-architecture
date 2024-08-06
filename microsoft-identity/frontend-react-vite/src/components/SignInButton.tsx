@@ -6,10 +6,10 @@ const SignInButton: React.FC = () => {
 
   const handleLogin = (loginType: string) => {
     if (loginType === "popup") {
-      instance.loginPopup().catch(e => console.error(e));
+      instance.loginPopup({ scopes: ["api://1674abe9-cd8a-4f9f-8860-1c001c0b86ef/access_as_user"] }).catch(e => console.error(e));
     }
     else if (loginType === "redirect") {
-      instance.loginRedirect().catch(e => console.error(e));
+      instance.loginRedirect({ scopes: ["api://1674abe9-cd8a-4f9f-8860-1c001c0b86ef/access_as_user"] }).catch(e => console.error(e));
     }
   }
 

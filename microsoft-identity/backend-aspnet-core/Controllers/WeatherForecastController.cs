@@ -1,9 +1,13 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Web.Resource;
 
-namespace backend_aspnetcore.Controllers
+namespace backend_aspnet_core.Controllers
 {
+	[Authorize]
 	[ApiController]
 	[Route("[controller]")]
+	[RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
 	public class WeatherForecastController : ControllerBase
 	{
 		private static readonly string[] Summaries = new[]
@@ -19,7 +23,7 @@ namespace backend_aspnetcore.Controllers
 		}
 
 		[HttpGet(Name = "GetWeatherForecast")]
-		public IEnumerable<WeatherForecast> Get()
+		public async Task<IEnumerable<WeatherForecast>> Get()
 		{
 			return Enumerable.Range(1, 5).Select(index => new WeatherForecast
 			{

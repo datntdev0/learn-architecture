@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Identity.Web;
 
-namespace backend_aspnetcore
+namespace backend_aspnet_core
 {
 	public class Program
 	{
@@ -8,6 +10,8 @@ namespace backend_aspnetcore
 			var builder = WebApplication.CreateBuilder(args);
 
 			// Add services to the container.
+			builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+				.AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
 
 			builder.Services.AddControllers();
 			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -24,6 +28,8 @@ namespace backend_aspnetcore
 			}
 
 			app.UseHttpsRedirection();
+
+			app.UseAuthentication();
 
 			app.UseAuthorization();
 
