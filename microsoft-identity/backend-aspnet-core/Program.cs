@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Identity.Web;
+using backend_aspnet_core.Registrars;
 
 namespace backend_aspnet_core
 {
@@ -13,10 +14,12 @@ namespace backend_aspnet_core
 			builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 				.AddMicrosoftIdentityWebApi(builder.Configuration.GetSection("AzureAd"));
 
+			builder.AddMicrosoftGraphServiceClient();
+
+			builder.Services.AddRouting(x => x.LowercaseUrls = true);
 			builder.Services.AddControllers();
-			// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-			builder.Services.AddEndpointsApiExplorer();
-			builder.Services.AddSwaggerGen();
+
+			builder.AddSwaggerApiExplorerGeneration();
 
 			var app = builder.Build();
 

@@ -35,4 +35,7 @@ export const msalConfig: Configuration = {
   }
 }
 
+const SCOPE_NAMES = ['access_as_user'];
+
+export const scopes = SCOPE_NAMES.map(x => `api://${import.meta.env.VITE_CLIENT_NAME}/${x}`);
 export const msalInstance = new PublicClientApplication(msalConfig);

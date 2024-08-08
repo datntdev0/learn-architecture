@@ -1,15 +1,17 @@
 import { useMsal } from "@azure/msal-react";
 import { Dropdown, DropdownButton } from "react-bootstrap";
+import { scopes } from "../contexts/msalConfig";
+
 
 const SignInButton: React.FC = () => {
   const { instance } = useMsal()
 
   const handleLogin = (loginType: string) => {
     if (loginType === "popup") {
-      instance.loginPopup({ scopes: ["api://1674abe9-cd8a-4f9f-8860-1c001c0b86ef/access_as_user"] }).catch(e => console.error(e));
+      instance.loginPopup({ scopes }).catch(e => console.error(e));
     }
     else if (loginType === "redirect") {
-      instance.loginRedirect({ scopes: ["api://1674abe9-cd8a-4f9f-8860-1c001c0b86ef/access_as_user"] }).catch(e => console.error(e));
+      instance.loginRedirect({ scopes }).catch(e => console.error(e));
     }
   }
 
