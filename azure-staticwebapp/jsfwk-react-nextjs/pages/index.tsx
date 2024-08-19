@@ -1,3 +1,6 @@
+import Image from "next/image";
+import Link from "next/link";
+
 export default function Home() {
   return (
     <>
@@ -15,7 +18,7 @@ function HeaderSection() {
       <nav className="bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
         <div className="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl">
           <a href="https://flowbite.com" className="flex items-center">
-            <img
+            <Image
               src="https://flowbite.com/docs/images/logo.svg"
               className="mr-3 h-6 sm:h-9"
               alt="Flowbite Logo"
@@ -25,18 +28,18 @@ function HeaderSection() {
             </span>
           </a>
           <div className="flex items-center lg:order-2">
-            <a
+            <Link
               href="/auth/signin"
               className="text-gray-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
             >
               Log in
-            </a>
-            <a
+            </Link>
+            <Link
               href="/auth/signup"
               className="text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
             >
               Get started
-            </a>
+            </Link>
             <button
               data-collapse-toggle="mobile-menu-2"
               type="button"
@@ -146,7 +149,7 @@ function FirstSection() {
             New
           </span>{" "}
           <span className="text-sm font-medium">
-            Flowbite is out! See what's new
+            Flowbite is out! See what&apos;s new
           </span>
           <i className="ml-2 w-5 fa-solid fa-chevron-right"></i>
         </a>
@@ -182,19 +185,23 @@ function FirstSection() {
               href="#"
               className="mr-5 mb-5 lg:mb-0 hover:text-gray-800 dark:hover:text-gray-400"
             >
-              <img className="h-8" src="svgs/facebook.svg" />
+              <Image className="h-8" src="svgs/facebook.svg" alt="facebook" />
             </a>
             <a
               href="#"
               className="mr-5 mb-5 lg:mb-0 hover:text-gray-800 dark:hover:text-gray-400"
             >
-              <img className="h-9 mt-4" src="svgs/google.svg" />
+              <Image className="h-9 mt-4" src="svgs/google.svg" alt="google" />
             </a>
             <a
               href="#"
               className="mr-5 mb-5 lg:mb-0 hover:text-gray-800 dark:hover:text-gray-400"
             >
-              <img className="h-8 mt-3" src="svgs/microsoft.svg" />
+              <Image
+                className="h-8 mt-3"
+                src="svgs/microsoft.svg"
+                alt="microsoft"
+              />
             </a>
           </div>
         </div>
@@ -230,7 +237,7 @@ function SecondSection() {
           </a>
         </div>
         <div className="hidden lg:mt-0 lg:col-span-5 lg:flex">
-          <img
+          <Image
             src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/phone-mockup.png"
             alt="mockup"
           />
@@ -248,7 +255,7 @@ function FooterSection() {
           href="#"
           className="flex justify-center items-center text-2xl font-semibold text-gray-900 dark:text-white"
         >
-          <img
+          <Image
             src="https://flowbite.com/docs/images/logo.svg"
             className="mr-3 h-6 sm:h-9"
             alt="Flowbite Logo"
