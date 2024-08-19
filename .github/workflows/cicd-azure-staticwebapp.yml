@@ -1,0 +1,65 @@
+name: Deploy web app to Azure Static Web Apps
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "azure-staticwebapp/**"
+  pull_request:
+    branches: ["main"]
+    paths:
+      - "azure-staticwebapp/**"
+  workflow_dispatch:
+    inputs:
+      jsfwk_react_nextjs:
+        description: Deploy the React App with Next.JS
+        required: true
+        type: boolean
+
+jobs:
+  detect_changes:
+    runs-on: ubuntu-latest
+    name: Detect deployable application
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check for changes in specific folders
+        id: detect_changes
+        uses: dorny/paths-filter@v3
+        with:
+          base: ${{ github.ref }}
+          filters: |
+            jsfwk_react_nextjs:
+              - azure-staticwebapp/jsfwk-react-nextjs/**
+    outputs:
+      jsfwk_react_nextjs: ${{ steps.detect_changes.outputs.jsfwk_react_nextjs }}
+
+  deploy_jsfwk_react_nextjs:
+    needs: detect_changes
+    if: ${{ inputs.jsfwk_react_nextjs || needs.detect_changes.outputs.jsfwk_react_nextjs == 'true' }}
+    runs-on: ubuntu-latest
+    name: Deploy the Next.JS React App
+    steps:
+      - name: Login into Azure Service Principal
+        uses: Azure/login@v2
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Get Secret from Azure Key Vault
+        id: get_secret
+        uses: azure/cli@v2
+        with:
+          inlineScript: |
+            secret_value=$(az keyvault secret show \
+              --vault-name learn-azure-keyvault \
+              --name swa-token-jsfwk-react-nextjs \
+              --query value -o tsv)
+            echo "::add-mask::$secret_value"
+            echo "secret_value=$secret_value" >> $GITHUB_ENV
+      - uses: actions/checkout@v4
+      - name: Build and Deploy
+        uses: Azure/static-web-apps-deploy@v1
+        with:
+          azure_static_web_apps_api_token: ${{ env.secret_value }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          action: 'upload'
+          app_location: 'azure-staticwebapp/jsfwk-react-nextjs'
+          output_location: '.next'
