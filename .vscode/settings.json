@@ -10,6 +10,7 @@
         "**/next-env.d.ts": true,
         "**/node_modules": true,
         "**/out": true,
+        "**/dist": true,
         "**/.next": true,
     }
 }
