@@ -1,6 +1,6 @@
 import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal } from "@azure/msal-react";
 import React from 'react';
-import { loginRequest } from "../config/authConfig";
+import { loginRequest } from "../../config/authConfig";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
