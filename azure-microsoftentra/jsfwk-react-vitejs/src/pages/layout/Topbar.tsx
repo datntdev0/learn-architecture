@@ -1,6 +1,13 @@
+import { useMsal } from "@azure/msal-react";
 import { Dropdown } from "flowbite-react";
 
 export default function Topbar() {
+  const { instance } = useMsal();
+
+  function handleOnSignOutButtonClick(): void {
+    instance.logoutRedirect({ postLogoutRedirectUri: "/" }).catch(e => console.error(e));
+  }
+
   return (
     <nav className="bg-white border-b border-gray-200 px-4 py-2.5 dark:bg-gray-800 dark:border-gray-700 fixed left-0 right-0 top-0 z-50">
       <div className="flex flex-wrap justify-between items-center">
@@ -599,7 +606,7 @@ export default function Topbar() {
               Pro version
             </Dropdown.Item>
             <Dropdown.Divider />
-            <Dropdown.Item className="font-bold">
+            <Dropdown.Item className="font-bold" onClick={() => handleOnSignOutButtonClick()}>
               <i className="fa-solid fa-right-from-bracket mr-2"></i>
               Sign out
             </Dropdown.Item>
