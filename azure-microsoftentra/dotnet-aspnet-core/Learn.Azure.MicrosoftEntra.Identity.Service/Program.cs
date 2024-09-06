@@ -9,8 +9,12 @@ namespace Learn.Azure.MicrosoftEntra.Identity.Service
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            // Allow to access HttpContext from custom services
+            builder.Services.AddBearerTokenProvider();
+
             // Add services to the container.
             builder.Services.AddMicrosoftIdentityAuthentication(builder.Configuration);
+            builder.Services.AddMicrosoftGraphServiceClient(builder.Configuration);
 
             builder.Services.AddControllers(options =>
             {

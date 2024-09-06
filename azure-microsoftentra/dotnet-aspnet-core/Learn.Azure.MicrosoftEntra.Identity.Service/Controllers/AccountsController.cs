@@ -1,7 +1,8 @@
 using Learn.Azure.MicrosoftEntra.Identity.Service.Contracts;
+using Learn.Azure.MicrosoftEntra.Identity.Service.Registrars;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
+using Microsoft.Graph;
 
 namespace Learn.Azure.MicrosoftEntra.Identity.Service.Controllers
 {
@@ -10,24 +11,31 @@ namespace Learn.Azure.MicrosoftEntra.Identity.Service.Controllers
     [Route("[controller]")]
     public class AccountsController : ControllerBase
     {
+        private readonly IServiceProvider _serviceProvider;
         private readonly ILogger<AccountsController> _logger;
 
-        public AccountsController(ILogger<AccountsController> logger)
+        public AccountsController(IServiceProvider serviceProvider)
         {
-            _logger = logger;
+            _serviceProvider = serviceProvider;
+            _logger = serviceProvider.GetRequiredService<ILogger<AccountsController>>();
         }
 
         [HttpGet("profile")]
         [ProducesResponseType(200, Type = typeof(AccountProfile))]
-        public IActionResult GetProfile()
+        public async Task<IActionResult> GetProfile()
         {
+            var graphClient = _serviceProvider.GetRequiredKeyedService<GraphServiceClient>(MsGraphClientType.OnBehalfOf);
+            var me = await graphClient.Me.GetAsync();
+
+            if (me == null) return NotFound();
+
             return Ok(new AccountProfile()
             {
-                DisplayName = "Dat Nguyen",
-                FirstName = "Dat",
-                LastName = "Nguyen",
-                Email = "datntdev@outlook.com",
-                ObjectId = Guid.NewGuid(),
+                DisplayName = me.DisplayName!,
+                FirstName = me.GivenName!,
+                LastName = me.Surname!,
+                Email = me.UserPrincipalName!,
+                ObjectId = Guid.Parse(me.Id!),
             });
         }
     }
