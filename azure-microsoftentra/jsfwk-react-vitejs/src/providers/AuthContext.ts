@@ -1,13 +1,10 @@
 import { createContext } from "react";
-
-export interface TokenPayload {
-  name: string;
-  upn: string;
-}
+import { AccountProfile } from "../models/AccountProfile";
 
 export interface AuthContextType {
+  profile: AccountProfile | null;
+  fetchProfile: () => Promise<void>;
   getAccessToken: () => string | null;
-  getAccessTokenPayload: (token: string | null) => TokenPayload | null;
 }
 
 export const AuthContext = createContext<AuthContextType | null>(null);

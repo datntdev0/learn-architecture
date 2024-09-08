@@ -1,6 +1,7 @@
-import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal } from "@azure/msal-react";
-import React from 'react';
+import { AuthenticatedTemplate, UnauthenticatedTemplate, useIsAuthenticated, useMsal } from "@azure/msal-react";
+import React, { useEffect } from 'react';
 import { loginRequest } from "../../config/authConfig";
+import { useAuth } from "../../hooks/useAuth";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -8,11 +9,17 @@ interface ProtectedRouteProps {
 
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const { instance } = useMsal();
+  const { profile, fetchProfile } = useAuth();
+  const isAuthenticated = useIsAuthenticated();
 
   function handleOnLoginButtonClick(): void {
     instance.loginRedirect(loginRequest)
       .catch(e => console.error(e));
   }
+
+  useEffect(() => {
+    if (isAuthenticated && !profile) fetchProfile();
+  }, [fetchProfile, isAuthenticated, profile])
 
   return (
     <>

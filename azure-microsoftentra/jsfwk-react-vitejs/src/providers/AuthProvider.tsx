@@ -1,9 +1,13 @@
 import { PublicClientApplication } from "@azure/msal-browser";
 import { MsalProvider } from "@azure/msal-react";
+import { useState } from "react";
 import { msalConfig } from "../config/authConfig";
-import { TokenPayload, AuthContextType, AuthContext } from "./AuthContext";
+import { AccountProfile } from "../models/AccountProfile";
+import { AuthContext, AuthContextType } from "./AuthContext";
 
 const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+
+  const [profile, setProfile] = useState<AccountProfile | null>(null);
 
   const getAccessToken = (): string | null => {
     const keys = Object.keys(window.localStorage);
@@ -14,30 +18,34 @@ const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
     return accessToken;
   };
 
-  const getAccessTokenPayload = (token: string | null): TokenPayload | null => {
-    if (!token) return null;
+  const fetchProfile = async (): Promise<void> => {
     try {
-      const base64Url = token.split('.')[1];
-      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-      return JSON.parse(window.atob(base64));
+      const response = await fetch("https://localhost:7216/Accounts/profile", {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${getAccessToken()}`,
+        }
+      });
+      const data = await response.json();
+      setProfile(data);
     } catch (error) {
-      console.error('Error parsing access token:', error);
-      return null;
+      console.error(error);
     }
   };
 
   const contextValue: AuthContextType = {
+    profile,
+    fetchProfile,
     getAccessToken,
-    getAccessTokenPayload,
   };
 
   return (
-    <AuthContext.Provider value= { contextValue } >
-    <MsalProvider instance={ new PublicClientApplication(msalConfig) }>
-      { children }
+    <AuthContext.Provider value= { contextValue }>
+      <MsalProvider instance={ new PublicClientApplication(msalConfig) }>
+        { children }
       </MsalProvider>
-      </AuthContext.Provider>
-  )
+    </AuthContext.Provider>
+  );
 }
 
 export default AuthProvider;

@@ -38,6 +38,6 @@ export const msalConfig: Configuration = {
 };
 
 export const loginRequest = {
-  scopes: ["User.Read"] as string[]
+  scopes: ["api://learn-architecture-azure/Application.Access"] as string[]
 };
 

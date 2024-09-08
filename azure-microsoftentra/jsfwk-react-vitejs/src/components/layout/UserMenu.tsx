@@ -1,22 +1,10 @@
-import { useIsAuthenticated, useMsal } from "@azure/msal-react";
+import { useMsal } from "@azure/msal-react";
 import { Dropdown } from "flowbite-react";
 import { useAuth } from "../../hooks/useAuth";
-import { useEffect, useState } from "react";
-import { TokenPayload } from "../../providers/AuthContext";
 
 export default function UserMenu() {
   const { instance } = useMsal();
-  const { getAccessToken, getAccessTokenPayload } = useAuth();
-  const isAuthenticated = useIsAuthenticated();
-  const [userProfile, setUserProfile] = useState<TokenPayload>({} as TokenPayload);
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      const accessToken = getAccessToken();
-      const profile = getAccessTokenPayload(accessToken);
-      if (profile) setUserProfile(profile)
-    }
-  }, [isAuthenticated, getAccessToken, getAccessTokenPayload])
+  const { profile } = useAuth();
 
   function handleOnSignOutButtonClick(): void {
     instance.logoutRedirect({ postLogoutRedirectUri: "/" }).catch(e => console.error(e));
@@ -38,10 +26,10 @@ export default function UserMenu() {
     }>
       <Dropdown.Header>
         <span className="block text-sm font-semibold text-gray-900 dark:text-white">
-          {userProfile?.name}
+          {profile?.displayName}
         </span>
         <span className="block text-sm text-gray-900 truncate dark:text-white">
-          {userProfile?.upn}
+          {profile?.email}
         </span>
       </Dropdown.Header>
       <Dropdown.Item>
