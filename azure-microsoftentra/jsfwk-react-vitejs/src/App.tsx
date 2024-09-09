@@ -7,6 +7,7 @@ import Custom404 from "./pages/404";
 import SignIn from "./pages/auth/SignIn";
 import SignUp from "./pages/auth/SignUp";
 import HomePage from "./pages/HomePage";
+import UserList from "./pages/admin/UserList";
 
 export default function App() {
   return (
@@ -17,6 +18,7 @@ export default function App() {
         <Route path="/auth/signup" element={<ReverseProtectedRoute><SignUp /></ReverseProtectedRoute>} />
         <Route path="/admin" element={<ProtectedRoute><MainLayout /></ProtectedRoute>}>
           <Route index element={<BlankPage />} />
+          <Route path="users" element={<UserList />} />
         </Route>
         <Route path="*" element={<Custom404 />} />
       </Routes>
